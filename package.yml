@@ -1,3 +1,10 @@
 depends:
     - test-runner
 
+source:
+    - checksum_block.c
+    - crc.c
+
+tests:
+    - tests/block_checksum_tests.cpp
+
