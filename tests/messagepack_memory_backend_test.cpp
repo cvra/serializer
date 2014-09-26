@@ -118,3 +118,12 @@ TEST(CMPApiTestGroup, WriterWorksAsExpected)
     serializer_read_bytes(&s, data, sizeof data);
     STRCMP_EQUAL("xkcd", data);
 }
+
+TEST(CMPApiTestGroup, CheckMessagePackVersion)
+{
+    // Forces the use of MessagePack 5 to avoid updating to non compatible
+    // version
+    uint32_t version = cmp_mp_version();
+
+    CHECK_EQUAL(5, version);
+}
