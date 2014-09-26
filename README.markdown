@@ -1,4 +1,5 @@
 # Configuration saver
+[![Build Status](https://travis-ci.org/cvra/serializer.png)](https://travis-ci.org/cvra/serializer)
 
 This module is responsible for saving some configuration data, for example in a flash area.
 Therefore, it has several responsabilities :
