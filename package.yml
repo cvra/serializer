@@ -5,7 +5,9 @@ source:
     - checksum_block.c
     - crc.c
     - cmp.c
+    - serialization.c
 
 tests:
     - tests/block_checksum_tests.cpp
+    - tests/messagepack_memory_backend_test.cpp
 
