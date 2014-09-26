@@ -6,7 +6,7 @@ extern "C" {
 #include "../cmp.h"
 }
 
-TEST_GROUP(MessagePackMemoryBackEnd)
+TEST_GROUP(SerializerTestGroup)
 {
     serializer_t s;
     char myblock[30];
@@ -16,7 +16,7 @@ TEST_GROUP(MessagePackMemoryBackEnd)
     }
 };
 
-TEST(MessagePackMemoryBackEnd, CanCreateSerializer)
+TEST(SerializerTestGroup, CanCreateSerializer)
 {
     POINTERS_EQUAL(myblock, s._block);
     CHECK_EQUAL(sizeof myblock, s._block_size);
@@ -24,21 +24,21 @@ TEST(MessagePackMemoryBackEnd, CanCreateSerializer)
     POINTERS_EQUAL(myblock, s._read_cursor);
 }
 
-TEST(MessagePackMemoryBackEnd, CanWriteABuffer)
+TEST(SerializerTestGroup, CanWriteABuffer)
 {
     const char *data = "hello";
     serializer_write_bytes(&s, data, 5);
     STRCMP_EQUAL(data, myblock);
 }
 
-TEST(MessagePackMemoryBackEnd, WriteMovesWriteHead)
+TEST(SerializerTestGroup, WriteMovesWriteHead)
 {
     const char *data = "hello";
     serializer_write_bytes(&s, data, 5);
     POINTERS_EQUAL(s._write_cursor, &myblock[5]);
 }
 
-TEST(MessagePackMemoryBackEnd, CanWriteMultipleTimes)
+TEST(SerializerTestGroup, CanWriteMultipleTimes)
 {
     const char *data1 = "hel";
     const char *data2 = "lo";
@@ -47,7 +47,7 @@ TEST(MessagePackMemoryBackEnd, CanWriteMultipleTimes)
     STRCMP_EQUAL("hello", myblock);
 }
 
-TEST(MessagePackMemoryBackEnd, CanRead)
+TEST(SerializerTestGroup, CanRead)
 {
     char data[5 + 1];
     data[5] = 0;
@@ -58,14 +58,14 @@ TEST(MessagePackMemoryBackEnd, CanRead)
     STRCMP_EQUAL("hello", data);
 }
 
-TEST(MessagePackMemoryBackEnd, ReadMovesReadHead)
+TEST(SerializerTestGroup, ReadMovesReadHead)
 {
     char data[5];
     serializer_read_bytes(&s, data, 5);
     POINTERS_EQUAL(&myblock[5], s._read_cursor);
 }
 
-TEST(MessagePackMemoryBackEnd, CanReadManyTimes)
+TEST(SerializerTestGroup, CanReadManyTimes)
 {
     char data1[3 + 1];
     char data2[2 + 1];
@@ -120,13 +120,4 @@ TEST(CMPApiTestGroup, WriterWorksAsExpected)
 
     STRCMP_EQUAL("xkcd", data);
     CHECK_EQUAL(5, l);
-}
-
-TEST(CMPApiTestGroup, CheckMessagePackVersion)
-{
-    // Forces the use of MessagePack 5 to avoid updating to non compatible
-    // version
-    uint32_t version = cmp_mp_version();
-
-    CHECK_EQUAL(5, version);
 }

@@ -16,6 +16,15 @@ TEST_GROUP(MessagePackTestGroup)
     }
 };
 
+TEST(MessagePackTestGroup, CheckMessagePackVersion)
+{
+    // Forces the use of MessagePack 5 to avoid updating to non compatible
+    // version
+    uint32_t version = cmp_mp_version();
+
+    CHECK_EQUAL(5, version);
+}
+
 TEST(MessagePackTestGroup, CanWriteFloat)
 {
     float a = 3.14;
