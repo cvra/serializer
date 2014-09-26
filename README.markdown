@@ -33,3 +33,12 @@ Sample usage :
         printf("CRC mismatch, data is probably corrupt.\n");
     }
 ```
+
+## Serialization
+Serializing is done in-memory using the MessagePack format, which is pretty efficient but stills add some metadata to be able to correctly decode the type of the data.
+
+For usage sample see `tests/messagepack_tests.cpp`
+
+## Putting it together
+The idea is to use a `serializer` which will write into the payload of a CRC'd block.
+For an implementation of this idea see `tests/integration_tests.cpp`.
