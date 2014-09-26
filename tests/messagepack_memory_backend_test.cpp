@@ -114,9 +114,12 @@ TEST(CMPApiTestGroup, ReaderWorksAsExpected)
 
 TEST(CMPApiTestGroup, WriterWorksAsExpected)
 {
-    ctx.write(&ctx, "xkcd", 5);
+    size_t l;
+    l = ctx.write(&ctx, "xkcd", 5);
     serializer_read_bytes(&s, data, sizeof data);
+
     STRCMP_EQUAL("xkcd", data);
+    CHECK_EQUAL(5, l);
 }
 
 TEST(CMPApiTestGroup, CheckMessagePackVersion)
