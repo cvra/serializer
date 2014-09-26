@@ -1,6 +1,8 @@
 #include <string.h>
 #include "serialization.h"
 
+static bool serializer_cmp_reader(cmp_ctx_t *context, void *data, size_t limit);
+static size_t serializer_cmp_writer(cmp_ctx_t *context, const void *data, size_t count);
 
 void serializer_init(serializer_t *s, char *block, size_t block_size)
 {
@@ -21,4 +23,25 @@ void serializer_read_bytes(serializer_t *s, char *data, size_t max_size)
 {
     memcpy(data, s->_read_cursor, max_size);
     s->_read_cursor += max_size;
+}
+
+void serializer_cmp_ctx_factory(cmp_ctx_t *context, serializer_t *serializer)
+{
+    cmp_init(context, serializer, serializer_cmp_reader, serializer_cmp_writer);
+}
+
+static bool serializer_cmp_reader(cmp_ctx_t *context, void *data, size_t limit)
+{
+    serializer_t *s;
+    s = (serializer_t *)context->buf;
+    serializer_read_bytes(s, data, limit);
+
+    return true;
+}
+
+static size_t serializer_cmp_writer(cmp_ctx_t *context, const void *data, size_t count)
+{
+    serializer_t *s;
+    s = (serializer_t *)context->buf;
+    serializer_write_bytes(s, data, count);
 }

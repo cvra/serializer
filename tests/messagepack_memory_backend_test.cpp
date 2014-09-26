@@ -2,6 +2,10 @@
 #include <cstring>
 #include "../serialization.h"
 
+extern "C" {
+#include "../cmp.h"
+}
+
 TEST_GROUP(MessagePackMemoryBackEnd)
 {
     serializer_t s;
@@ -75,3 +79,42 @@ TEST(MessagePackMemoryBackEnd, CanReadManyTimes)
     STRCMP_EQUAL("lo", data2);
 }
 
+TEST_GROUP(CMPApiTestGroup)
+{
+    cmp_ctx_t ctx;
+    char buffer[64];
+    char data[64];
+    serializer_t s;
+
+    void setup()
+    {
+        serializer_init(&s, buffer, sizeof buffer);
+        serializer_cmp_ctx_factory(&ctx, &s);
+        memset(buffer, 0, sizeof buffer);
+        memset(data, 0, sizeof data);
+    }
+};
+
+TEST(CMPApiTestGroup, CanInitContext)
+{
+    POINTERS_EQUAL(&s, ctx.buf);
+}
+
+TEST(CMPApiTestGroup, ReaderWorksAsExpected)
+{
+    bool read_successful;
+
+    serializer_write_bytes(&s, "hello", 5);
+
+    read_successful = ctx.read(&ctx, data, sizeof data);
+
+    STRCMP_EQUAL("hello", data);
+    CHECK_TRUE(read_successful);
+}
+
+TEST(CMPApiTestGroup, WriterWorksAsExpected)
+{
+    ctx.write(&ctx, "xkcd", 5);
+    serializer_read_bytes(&s, data, sizeof data);
+    STRCMP_EQUAL("xkcd", data);
+}
