@@ -5,13 +5,13 @@
 TEST_GROUP(ChecksumBlockTestGroup)
 {
     uint8_t myblock[64];
+    uint32_t crc;
+    bool valid;
 
     void setup(void)
     {
         memset(myblock, 0, sizeof(myblock));
-
     }
-
 };
 
 TEST(ChecksumBlockTestGroup, CorrectSpaceIsReservedForChecksum)
@@ -26,8 +26,7 @@ TEST(ChecksumBlockTestGroup, CorrectSpaceIsReservedForChecksum)
 
 TEST(ChecksumBlockTestGroup, CanComputeBlockChecksum)
 {
-    uint32_t crc;
-
+    // Checks if we can compute the CRC of the block
     crc = block_crc_compute((void *)myblock, sizeof(myblock));
 
     CHECK_EQUAL(0x04128908, crc);
@@ -35,8 +34,9 @@ TEST(ChecksumBlockTestGroup, CanComputeBlockChecksum)
 
 TEST(ChecksumBlockTestGroup, CanUpdateCheckSum)
 {
-    uint32_t crc;
+    // Checks if the correct CRC gets written to the header
     crc = block_crc_update((void *)myblock, sizeof(myblock));
+
     CHECK_EQUAL(0x08, myblock[0]);
     CHECK_EQUAL(0x89, myblock[1]);
     CHECK_EQUAL(0x12, myblock[2]);
@@ -46,7 +46,7 @@ TEST(ChecksumBlockTestGroup, CanUpdateCheckSum)
 
 TEST(ChecksumBlockTestGroup, CanGetCheckSumFromHeader)
 {
-    uint32_t crc;
+    // Checks if we can read the CRC back from the header
     myblock[0] = 0x42;
     myblock[1] = 0x43;
     myblock[2] = 0x44;
@@ -60,8 +60,6 @@ TEST(ChecksumBlockTestGroup, CanGetCheckSumFromHeader)
 TEST(ChecksumBlockTestGroup, NonMatchingCheckSum)
 {
     // CRC should be invalid because CRC([0] * 60) != 0
-    bool valid;
-
     valid = block_crc_verify((void *)myblock, sizeof(myblock));
 
     CHECK_FALSE(valid);
@@ -69,8 +67,6 @@ TEST(ChecksumBlockTestGroup, NonMatchingCheckSum)
 
 TEST(ChecksumBlockTestGroup, testname)
 {
-    bool valid;
-
     // Now we update the CRC before checking it so we know it must be valid
     block_crc_update((void *)myblock, sizeof(myblock));
     valid = block_crc_verify((void *)myblock, sizeof(myblock));
