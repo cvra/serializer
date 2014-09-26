@@ -10,4 +10,5 @@ source:
 tests:
     - tests/block_checksum_tests.cpp
     - tests/messagepack_memory_backend_test.cpp
+    - tests/messagepack_tests.cpp
 
