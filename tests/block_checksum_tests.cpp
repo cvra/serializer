@@ -54,7 +54,7 @@ TEST(ChecksumBlockTestGroup, CanGetCheckSumFromHeader)
 
     crc = block_crc_read((void *)myblock);
 
-    POINTERS_EQUAL(0x45444342, crc);
+    CHECK_EQUAL(0x45444342, crc);
 }
 
 TEST(ChecksumBlockTestGroup, NonMatchingCheckSum)
