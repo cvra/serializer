@@ -4,8 +4,11 @@ depends:
 source:
     - checksum_block.c
     - crc.c
-    - cmp.c
+    - cmp/cmp.c
     - serialization.c
+
+include_directories:
+    - cmp
 
 tests:
     - tests/block_checksum_tests.cpp
