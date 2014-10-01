@@ -66,3 +66,8 @@ Example usage (taken from `tests/messagepack_tests.cpp`) :
 ## Putting it together
 The idea is to use a `serializer` which will write into the payload of a CRC'd block.
 For an implementation of this idea see `tests/integration_tests.cpp`.
+
+## Safety caution
+Even if the API asks for a size of the buffer, it is currently not used to implement bound checking on the data.
+Buffer overflow can happen, which might result to a crash or a security vulnerability.
+The user of this module should always check that there is enough space in a block to perform the intended operation.
