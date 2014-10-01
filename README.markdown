@@ -38,7 +38,30 @@ Sample usage :
 ## Serialization
 Serializing is done in-memory using the MessagePack format, which is pretty efficient but stills add some metadata to be able to correctly decode the type of the data.
 
-For usage sample see `tests/messagepack_tests.cpp`
+There are two different components at work here :
+1. The C MessagePack library
+2. An in-memory writer that can be used to write MessagePack objects directly to a memory block.
+
+Example usage (taken from `tests/messagepack_tests.cpp`) :
+```cpp
+    cmp_ctx_t context;
+    serializer_t serializer;
+    char buffer[256];
+    float b;
+    bool success;
+
+    serializer_init(&serializer, buffer, sizeof buffer);
+    serializer_cmp_ctx_factory(&context, &serializer);
+
+    cmp_write_float(&context, 3.14);
+    success = cmp_read_float(&context, &b);
+
+    if (success) {
+        /* b was read correctly. */
+    } else {
+        printf("Could not read back float !");
+    }
+```
 
 ## Putting it together
 The idea is to use a `serializer` which will write into the payload of a CRC'd block.
