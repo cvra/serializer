@@ -1,6 +1,7 @@
 #include "CppUTest/TestHarness.h"
 #include <cstring>
 #include "../checksum_block.h"
+#include "../crc.h"
 
 TEST_GROUP(ChecksumBlockTestGroup)
 {
@@ -72,4 +73,17 @@ TEST(ChecksumBlockTestGroup, testname)
     valid = block_crc_verify((void *)myblock, sizeof(myblock));
 
     CHECK_TRUE(valid);
+}
+
+TEST_GROUP(CRCTestGroup)
+{
+
+};
+
+TEST(CRCTestGroup, SimpleCRCTest)
+{
+    char buf[] = {1,2,3};
+    uint32_t crc = 0;
+    crc = crc32(crc, buf, sizeof buf);
+    CHECK_EQUAL(1438416925, crc);
 }

@@ -2,7 +2,7 @@
 #ifndef CCAN_CRC_H
 #define CCAN_CRC_H
 
-#ifdef __cpluscplus
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -21,7 +21,7 @@ extern "C" {
  * See crc32c() for details.
  */
 uint32_t crc32(uint32_t start_crc, const void *buf, size_t size);
-#ifdef __cpluscplus
+#ifdef __cplusplus
 }
 #endif
 #endif /* CCAN_CRC_H */
