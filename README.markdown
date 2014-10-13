@@ -13,6 +13,7 @@ It is independent of the storage back end and does not use any dynamic memory al
 
 ## Encapsulation with a checksum
 This is done by the `checksum_block` module using a CRC32 (IEEE one to be specific) which is then stored before the data.
+The CRC is stored in network byte order (MSB first).
 
 Sample usage :
 

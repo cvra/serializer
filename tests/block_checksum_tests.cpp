@@ -37,20 +37,20 @@ TEST(ChecksumBlockTestGroup, CanUpdateCheckSum)
     // Checks if the correct CRC gets written to the header
     crc = block_crc_update((void *)myblock, sizeof(myblock));
 
-    CHECK_EQUAL(0x08, myblock[0]);
-    CHECK_EQUAL(0x89, myblock[1]);
-    CHECK_EQUAL(0x12, myblock[2]);
-    CHECK_EQUAL(0x04, myblock[3]);
+    CHECK_EQUAL(0x04, myblock[0]);
+    CHECK_EQUAL(0x12, myblock[1]);
+    CHECK_EQUAL(0x89, myblock[2]);
+    CHECK_EQUAL(0x08, myblock[3]);
     CHECK_EQUAL(0x04128908, crc);
 }
 
 TEST(ChecksumBlockTestGroup, CanGetCheckSumFromHeader)
 {
     // Checks if we can read the CRC back from the header
-    myblock[0] = 0x42;
-    myblock[1] = 0x43;
-    myblock[2] = 0x44;
-    myblock[3] = 0x45;
+    myblock[0] = 0x45;
+    myblock[1] = 0x44;
+    myblock[2] = 0x43;
+    myblock[3] = 0x42;
 
     crc = block_crc_read((void *)myblock);
 
