@@ -38,3 +38,20 @@ TEST(MessagePackTestGroup, CanWriteFloat)
     CHECK_TRUE(success);
     CHECK_EQUAL(a, b);
 }
+
+TEST(MessagePackTestGroup, CanWriteString)
+{
+    char data[30];
+    uint32_t data_len;
+    bool res;
+    char expected[] = "Hello";
+
+    cmp_write_str(&context, expected, 5);
+
+    // The data length parameter is used for both maximal size (in) and real size (out)
+    data_len = sizeof(data);
+
+    res = cmp_read_str(&context, data, &data_len);
+    CHECK_TRUE(res);
+    STRCMP_EQUAL(expected, data);
+}
