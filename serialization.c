@@ -25,6 +25,11 @@ void serializer_read_bytes(serializer_t *s, char *data, size_t max_size)
     s->_read_cursor += max_size;
 }
 
+int serializer_written_bytes_count(serializer_t *s)
+{
+    return (size_t)(s->_write_cursor) - (size_t)(s->_block);
+}
+
 void serializer_cmp_ctx_factory(cmp_ctx_t *context, serializer_t *serializer)
 {
     cmp_init(context, serializer, serializer_cmp_reader, serializer_cmp_writer);
@@ -46,3 +51,4 @@ static size_t serializer_cmp_writer(cmp_ctx_t *context, const void *data, size_t
     serializer_write_bytes(s, data, count);
     return count;
 }
+int serializer_written_bytes_count(serializer_t *s);

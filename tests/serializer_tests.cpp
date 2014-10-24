@@ -79,6 +79,17 @@ TEST(SerializerTestGroup, CanReadManyTimes)
     STRCMP_EQUAL("lo", data2);
 }
 
+TEST(SerializerTestGroup, WrittenCountIsZeroInitially)
+{
+    CHECK_EQUAL(0, serializer_written_bytes_count(&s));
+}
+
+TEST(SerializerTestGroup, WrittenCountIsChanged)
+{
+    serializer_write_bytes(&s, "hello", 5);
+    CHECK_EQUAL(5, serializer_written_bytes_count(&s));
+}
+
 TEST_GROUP(CMPApiTestGroup)
 {
     cmp_ctx_t ctx;
