@@ -70,13 +70,11 @@ TEST(MessagePackTestGroup, CanWriteCustomBinaryType)
     // Ext 8 header
     BYTES_EQUAL(0xc7, buffer[0]);
 
-    /* This part is commented out because of a bug in CMP (see issue #7)
     // Data length
     BYTES_EQUAL(3, buffer[1]);
 
     // Data type
     BYTES_EQUAL(12, buffer[2]);
-    */
 
     for (int i = 0; i < 3; ++i) {
         BYTES_EQUAL(data[i], buffer[3+i]);
