@@ -1,9 +1,9 @@
 depends:
     - test-runner
+    - crc
 
 source:
     - checksum_block.c
-    - crc.c
     - cmp/cmp.c
     - serialization.c
 

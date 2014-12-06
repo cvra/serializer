@@ -1,11 +1,11 @@
 #include "checksum_block.h"
-#include "crc.h"
+#include <crc/crc32.h>
 
 #define CRC_SIZE 4
 
 void *block_payload_get(void *block)
 {
-    return  block + CRC_SIZE;
+    return (char *)block + CRC_SIZE;
 }
 
 uint32_t block_crc_compute(void *block, size_t size)

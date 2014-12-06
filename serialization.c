@@ -51,4 +51,3 @@ static size_t serializer_cmp_writer(cmp_ctx_t *context, const void *data, size_t
     serializer_write_bytes(s, data, count);
     return count;
 }
-int serializer_written_bytes_count(serializer_t *s);
