@@ -5,7 +5,7 @@
 
 void *block_payload_get(void *block)
 {
-    return  block + CRC_SIZE;
+    return (char *)block + CRC_SIZE;
 }
 
 uint32_t block_crc_compute(void *block, size_t size)
