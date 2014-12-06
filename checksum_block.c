@@ -1,5 +1,5 @@
 #include "checksum_block.h"
-#include "crc.h"
+#include <crc/crc32.h>
 
 #define CRC_SIZE 4
 

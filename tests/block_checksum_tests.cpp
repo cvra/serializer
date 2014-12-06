@@ -1,7 +1,7 @@
 #include "CppUTest/TestHarness.h"
 #include <cstring>
 #include "../checksum_block.h"
-#include "../crc.h"
+#include <crc/crc32.h>
 
 TEST_GROUP(ChecksumBlockTestGroup)
 {
