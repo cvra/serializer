@@ -1,14 +1,11 @@
 depends:
     - test-runner
     - crc
+    - cmp
 
 source:
     - checksum_block.c
-    - cmp/cmp.c
     - serialization.c
-
-include_directories:
-    - cmp
 
 tests:
     - tests/block_checksum_tests.cpp
