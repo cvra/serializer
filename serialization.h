@@ -8,7 +8,7 @@ extern "C" {
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include "cmp.h"
+#include <cmp/cmp.h>
 
 typedef struct {
     char *_block;

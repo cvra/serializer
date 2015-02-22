@@ -3,7 +3,7 @@
 #include "../serialization.h"
 
 extern "C" {
-#include "cmp.h"
+#include "cmp/cmp.h"
 }
 
 TEST_GROUP(SerializerTestGroup)
